@@ -12,19 +12,13 @@ import pyverilog
 
 import numpy                    as     np
 import pandas                   as     pd
-# import ply.lex                  as     lex
-# import ply.yacc                 as     yacc
 
-# from   ply.lex                  import lex
-# from   ply.yacc                 import yacc
 from   tabulate                 import tabulate
 from   prettytable              import PrettyTable
 from   optparse                 import OptionParser
 from   pyverilog.vparser.ast    import *
 from   pyverilog.vparser.parser import parse
-
-# lexer  = lex.lex()
-# parser = yacc.yacc()
+# /home/nikkitachka/.local/lib/python3.10/site-packages/pyverilog/vparser - расположение pyverilog
 
 class PyVerilog_Parser:
     def __init__(self, filepath: str):
@@ -182,34 +176,41 @@ class PyVerilog_Parser:
     #############################################################################################################################
 
     def PyVerilog(self):
-        optparser = OptionParser()
-        optparser.add_option("-v", "--version", action="store_true", dest="showversion",
-                            default=False, help="Show the version")
-        optparser.add_option("-I", "--include", dest="include", action="append",
-                            default=[], help="Include path")
-        optparser.add_option("-D", dest="define", action="append",
-                            default=[], help="Macro Definition")
-        (options, args) = optparser.parse_args()
-
-
-        # filelist = args
-        # print(filelist)
         filelist = []
         filelist.append(self.filepath)
-        # print(filelist)
+
+        if os.path.isfile("/home/nikkitachka/Desktop/py_parser/header_parser/out/pyverilog_log.txt"):
+            os.remove("/home/nikkitachka/Desktop/py_parser/header_parser/out/pyverilog_log.txt")
+            print("Success\n")
+        else:
+            print("File doesn't exists!")
 
         ast, directives = parse(filelist,
                                 preprocess_include = [],
                                 preprocess_define  = [])
 
         ast.show()
-        # print(ast.self.parser)
 
-        # with io.open("pyverilog_log.txt", "w", encoding="utf-16") as f:
-        #     # f.write(print(str(ast.show())))
-        #     # print(str(ast.show()), file=f)
+        # with io.open("/home/nikkitachka/Desktop/py_parser/header_parser/out/pyverilog_log.txt", "r") as f:
+
+        #     print(f.read())
+
         #     f.close()
         #     if f.closed:
         #         print('file is closed')
+
+    #############################################################################################################################
+    
+    def ast_parse(self):
+
+        with io.open("/home/nikkitachka/Desktop/py_parser/header_parser/out/pyverilog_log.txt", "r") as f:
+            lines = f.readlines()
+            print(len(lines))
+            for i in range(len(lines)):
+                print(lines[i], end = "")
+
+            f.close()
+            if f.closed:
+                print('file is closed')
 
     #############################################################################################################################
